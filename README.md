@@ -33,6 +33,7 @@ In your code you should type-hint to `Datana\Zammad\Api\TicketsApiInterface`
 ### Create a ticket
 
 ```php
+use Datana\Zammad\Api\Domain\Value;
 use Datana\Zammad\Api\TicketsApi;
 use Datana\Zammad\Api\ZammadClient;
 
