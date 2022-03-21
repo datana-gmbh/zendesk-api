@@ -17,7 +17,7 @@ composer require datana-gmbh/zammad-api
 ```php
 use Datana\Zammad\Api\ZammadClient;
 
-$baseUri = 'https://api.zammad...';
+$baseUri = 'https://...';
 $token = '...';
 
 $client = new ZammadClient($baseUri, $token);
