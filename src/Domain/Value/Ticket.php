@@ -20,18 +20,16 @@ final readonly class Ticket
      */
     private array $values;
 
+    /**
+     * @param CustomFieldInterface[] $customFields
+     * @param Upload[] $uploads
+     */
     public function __construct(
         public string $requesterName,
         public string $requesterEmail,
         public string $subject,
         public string $description,
-        /*
-         * @var CustomFieldInterface[]
-         */
         public array $customFields = [],
-        /*
-         * @var Upload[]
-         */
         public array $uploads = [],
     ) {
         $values = [

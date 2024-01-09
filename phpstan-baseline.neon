@@ -1,12 +1,2 @@
 parameters:
 	ignoreErrors:
-		-
-			message: "#^Method Datana\\\\Zendesk\\\\Api\\\\Domain\\\\Value\\\\Ticket\\:\\:__construct\\(\\) has parameter \\$customFields with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Domain/Value/Ticket.php
-
-		-
-			message: "#^Method Datana\\\\Zendesk\\\\Api\\\\Domain\\\\Value\\\\Ticket\\:\\:__construct\\(\\) has parameter \\$uploads with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Domain/Value/Ticket.php
-
