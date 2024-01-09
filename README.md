@@ -33,11 +33,11 @@ In your code you should type-hint to `Datana\Zammad\Api\TicketsApiInterface`
 ### Create a ticket
 
 ```php
-use Datana\Zammad\Api\Domain\Value\Ticket;
-use Datana\Zammad\Api\TicketsApi;
-use Datana\Zammad\Api\ZammadClient;
+use Datana\Zendesk\Api\Domain\Value\Ticket;
+use Datana\Zendesk\Api\TicketsApi;
+use Zendesk\API\HttpClient;
 
-$client = new ZammadClient(/* ... */);
+$client = new HttpClient(/* ... */);
 
 $ticketsApi = new TicketsApi($client);
 
@@ -45,27 +45,50 @@ $ticket = new Ticket(/* ... */);
 $responseAsBool = $ticketsApi->create($ticket);
 ```
 
-### Update a ticket
+### Create a ticket with attachments
 
 ```php
-use Datana\Zammad\Api\TicketsApi;
-use Datana\Zammad\Api\ZammadClient;
+use Datana\Zendesk\Api\Domain\Value\Ticket;
+use Datana\Zendesk\Api\TicketsApi;
+use Datana\Zendesk\Api\AttachmentsApi;
+use Zendesk\API\HttpClient;
 
-$client = new ZammadClient(/* ... */);
+$client = new HttpClient(/* ... */);
+
+$attachmentsApi = new AttachmentsApi($client);
+
+$upload = $attachmentsApi->create(/** ... */)
 
 $ticketsApi = new TicketsApi($client);
 
-$responseAsBool = $ticketsApi->update(1, ['email' => 'foo@bar.de']);
+$ticket = new Ticket(/* ... */ );
+$responseAsBool = $ticketsApi->create($ticket);
 ```
 
-### Search for tickets
+
+### Custom field definition
 
 ```php
-use Datana\Zammad\Api\TicketsApi;
-use Datana\Zammad\Api\ZammadClient;
-$client = new ZammadClient(/* ... */);
+<?php
 
-$responseAsArray = $ticketsApi->search('foo');
+declare(strict_types=1);
+
+namespace App\Bridge\Zendesk\CustomFields;
+
+use Datana\Zendesk\Api\Domain\Value\CustomFieldInterface;
+
+final class SampleCustomField implements CustomFieldInterface
+{
+    public function id(): int
+    {
+        return 1231332332;
+    }
+
+    public function value(): mixed
+    {
+        return 'sample value';
+    }
+}
 ```
 
 [build-status-master-php]: https://github.com/datana-gmbh/zammad-api/workflows/PHP/badge.svg?branch=master
