@@ -14,11 +14,6 @@ composer require datana-gmbh/zendesk-api
 
 ### Setup
 
-        arguments:
-            - '%env(ZENDESK_API_SUBDOMAIN)%'
-        calls:
-            - ['setAuth', ['basic', { token: '%env(ZENDESK_API_TOKEN)%', username: '%env(ZENDESK_API_USERNAME)%' }]]
-
 ```php
 use Zendesk\API\HttpClient;
 
