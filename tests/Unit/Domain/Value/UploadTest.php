@@ -13,11 +13,9 @@ declare(strict_types=1);
 
 namespace Datana\Zendesk\Api\Tests\Unit\Domain\Value;
 
-use Datana\Zendesk\Api\Domain\Value\Attachment;
 use Datana\Zendesk\Api\Domain\Value\Upload;
 use Ergebnis\Test\Util\Helper;
 use PHPUnit\Framework\TestCase;
-use function PHPUnit\Framework\assertSame;
 
 final class UploadTest extends TestCase
 {

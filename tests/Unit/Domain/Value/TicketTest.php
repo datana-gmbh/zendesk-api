@@ -77,8 +77,8 @@ final class TicketTest extends TestCase
                 [
                     'id' => $customField->id(),
                     'value' => $customField->value(),
-                ]
-            ]
+                ],
+            ],
         ], $ticket->toArray());
     }
 
@@ -110,7 +110,6 @@ final class TicketTest extends TestCase
                     $upload->token,
                 ],
             ],
-
         ], $ticket->toArray());
     }
 }

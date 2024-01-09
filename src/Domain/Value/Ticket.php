@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Datana\Zendesk\Api\Domain\Value;
 
-use Safe\DateTimeImmutable;
-
 final readonly class Ticket
 {
     /**
@@ -27,11 +25,11 @@ final readonly class Ticket
         public string $requesterEmail,
         public string $subject,
         public string $description,
-        /**
+        /*
          * @var CustomFieldInterface[]
          */
         public array $customFields = [],
-        /**
+        /*
          * @var Upload[]
          */
         public array $uploads = [],

@@ -13,12 +13,9 @@ declare(strict_types=1);
 
 namespace Datana\Zendesk\Api\Domain\Value;
 
-use Safe\DateTimeImmutable;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-
 interface CustomFieldInterface
 {
     public function id(): int;
+
     public function value(): mixed;
 }
