@@ -13,12 +13,13 @@ declare(strict_types=1);
 
 namespace Datana\Zendesk\Api;
 
-use Datana\Zendesk\Api\Domain\Value\Ticket;
+use Datana\Zendesk\Api\Domain\Value\Attachment;
+use Datana\Zendesk\Api\Domain\Value\Upload;
 
-final class NullTicketsApi implements TicketsApiInterface
+final class NullAttachmentsApi implements AttachmentsApiInterface
 {
-    public function create(Ticket $ticket): bool
+    public function create(Attachment $attachment): Upload
     {
-        return true;
+        return new Upload('upload-token');
     }
 }

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Zammad-Api.
+ * This file is part of Zendesk-Api.
  *
  * (c) Datana GmbH <info@datana.rocks>
  *
@@ -11,56 +11,51 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Datana\Zammad\Api\Domain\Value;
+namespace Datana\Zendesk\Api\Domain\Value;
 
-use OskarStark\Value\TrimmedNonEmptyString;
-use function Safe\sprintf;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Safe\DateTimeImmutable;
 
-final class Ticket
+final readonly class Ticket
 {
     /**
      * @var array<mixed>
      */
     private array $values;
 
-    /**
-     * @param UploadedFile[] $attachments
-     */
     public function __construct(
-        string $title,
-        string $message,
-        string $aktenzeichen,
-        array $attachments,
-        string $email,
-        string $nachname,
-        string $group = 'Kundensupport',
-        string $note = 'Nachricht aus dem Mandantencockpit.',
-        string $tags = 'Sonstige Dokumente'
+        public string $requesterName,
+        public string $requesterEmail,
+        public string $subject,
+        public string $description,
+        /**
+         * @var CustomFieldInterface[]
+         */
+        public array $customFields = [],
+        /**
+         * @var Upload[]
+         */
+        public array $uploads = [],
     ) {
         $values = [
-            'title' => $title,
-            'group' => $group,
-            'customer_id' => sprintf('guess:%s', $email),
-            'state' => 'open',
-            'internal' => false,
-            'kontaktform_aktenzeichen' => TrimmedNonEmptyString::fromString($aktenzeichen)->toString(),
-            'kontaktform_email' => $email,
-            'kontaktform_nachname' => $nachname,
-            'article' => [
-                'subject' => $title,
-                'body' => $message,
+            'subject' => $subject,
+            'requester' => [
+                'name' => $requesterName,
+                'email' => $requesterEmail,
             ],
-            'note' => $note,
-            'tags' => $tags,
+            'comment' => [
+                'body' => $description,
+            ],
         ];
 
-        foreach ($attachments as $attachment) {
-            $values['article']['attachments'][] = [
-                'filename' => $attachment->getClientOriginalName(),
-                'data' => base64_encode($attachment->getContent()),
-                'mime-type' => $attachment->getMimeType(),
+        foreach ($customFields as $customField) {
+            $values['custom_fields'][] = [
+                'id' => $customField->id(),
+                'value' => $customField->value(),
             ];
+        }
+
+        foreach ($uploads as $upload) {
+            $values['comment']['uploads'][] = $upload->token;
         }
 
         $this->values = $values;

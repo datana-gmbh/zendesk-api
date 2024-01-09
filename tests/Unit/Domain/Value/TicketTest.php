@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Zammad-Api.
+ * This file is part of Zendesk-Api.
  *
  * (c) Datana GmbH <info@datana.rocks>
  *
@@ -11,13 +11,13 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Datana\Zammad\Api\Tests\Unit\Domain\Value;
+namespace Datana\Zendesk\Api\Tests\Unit\Domain\Value;
 
-use Datana\Zammad\Api\Domain\Value\Ticket;
+use Datana\Zendesk\Api\Domain\Value\Ticket;
+use Datana\Zendesk\Api\Domain\Value\Upload;
+use Datana\Zendesk\Api\Tests\Fixture\CustomFields\SampleCustomField;
 use Ergebnis\Test\Util\Helper;
 use PHPUnit\Framework\TestCase;
-use function Safe\sprintf;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final class TicketTest extends TestCase
 {
@@ -25,75 +25,92 @@ final class TicketTest extends TestCase
 
     /**
      * @test
-     *
-     * @dataProvider \Ergebnis\Test\Util\DataProvider\BoolProvider::false()
-     * @dataProvider \Ergebnis\Test\Util\DataProvider\BoolProvider::true()
      */
-    public function toArray(bool $withAttachments): void
+    public function toArray(): void
     {
         $faker = self::faker();
 
-        $title = $faker->sentence();
-        $message = $faker->sentence();
-        $aktenzeichen = $faker->word();
+        $ticket = new Ticket(
+            $name = $faker->name(),
+            $email = $faker->email(),
+            $subject = $faker->sentence(),
+            $description = $faker->text(),
+        );
 
-        $attachments = [];
-
-        if ($withAttachments) {
-            for ($i = 0; $faker->numberBetween(1, 3) > $i; ++$i) {
-                $attachments[] = new UploadedFile(
-                    $faker->filePath(),
-                    sprintf('%s.%s', $faker->word(), $faker->fileExtension()),
-                );
-            }
-        }
-
-        $email = $faker->email();
-        $nachname = $faker->userName();
-        $group = $faker->word();
-        $note = $faker->sentence();
-        $tags = $faker->word();
-
-        $expected = [
-            'title' => $title,
-            'group' => $group,
-            'customer_id' => sprintf('guess:%s', $email),
-            'state' => 'open',
-            'internal' => false,
-            'kontaktform_aktenzeichen' => $aktenzeichen,
-            'kontaktform_email' => $email,
-            'kontaktform_nachname' => $nachname,
-            'article' => [
-                'subject' => $title,
-                'body' => $message,
+        self::assertSame([
+            'subject' => $subject,
+            'requester' => [
+                'name' => $name,
+                'email' => $email,
             ],
-            'note' => $note,
-            'tags' => $tags,
-        ];
+            'comment' => [
+                'body' => $description,
+            ],
+        ], $ticket->toArray());
+    }
 
-        foreach ($attachments as $attachment) {
-            $expected['article']['attachments'][] = [
-                'filename' => $attachment->getClientOriginalName(),
-                'data' => base64_encode($attachment->getContent()),
-                'mime-type' => $attachment->getMimeType(),
-            ];
-        }
+    /**
+     * @test
+     */
+    public function toArrayWithCustomFields(): void
+    {
+        $faker = self::faker();
 
         $ticket = new Ticket(
-            $title,
-            $message,
-            $aktenzeichen,
-            $attachments,
-            $email,
-            $nachname,
-            $group,
-            $note,
-            $tags,
+            $name = $faker->name(),
+            $email = $faker->email(),
+            $subject = $faker->sentence(),
+            $description = $faker->text(),
+            [$customField = new SampleCustomField()]
         );
 
-        self::assertSame(
-            $expected,
-            $ticket->toArray(),
+        self::assertSame([
+            'subject' => $subject,
+            'requester' => [
+                'name' => $name,
+                'email' => $email,
+            ],
+            'comment' => [
+                'body' => $description,
+            ],
+            'custom_fields' => [
+                [
+                    'id' => $customField->id(),
+                    'value' => $customField->value(),
+                ]
+            ]
+        ], $ticket->toArray());
+    }
+
+    /**
+     * @test
+     */
+    public function toArrayWithUploads(): void
+    {
+        $faker = self::faker();
+
+        $ticket = new Ticket(
+            $name = $faker->name(),
+            $email = $faker->email(),
+            $subject = $faker->sentence(),
+            $description = $faker->text(),
+            [],
+            [$upload = new Upload($faker->md5())]
         );
+
+        self::assertSame([
+            'subject' => $subject,
+            'requester' => [
+                'name' => $name,
+                'email' => $email,
+            ],
+            'comment' => [
+                'body' => $description,
+                'uploads' => [
+                    $upload->token,
+                ],
+            ],
+
+        ], $ticket->toArray());
     }
 }

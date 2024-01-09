@@ -1,4 +1,4 @@
-# zammad-api
+# zendesk-api
 
 | Branch    | PHP                                         | Code Coverage                                        |
 |-----------|---------------------------------------------|------------------------------------------------------|
@@ -9,7 +9,7 @@
 ### Installation
 
 ```bash
-composer require datana-gmbh/zammad-api
+composer require datana-gmbh/zendesk-api
 ```
 
 ### Setup

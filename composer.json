@@ -1,28 +1,29 @@
 {
-    "name": "datana-gmbh/zammad-api",
+    "name": "datana-gmbh/zendesk-api",
     "type": "library",
-    "description": "API for Zammad",
+    "description": "API for Zendesk",
     "license": "MIT",
     "authors": [
         {
-            "name": "Oskar Stark",
-            "email": "oskarstark@googlemail.com"
+            "name": "Silas Joisten",
+            "email": "silasjoisten@proton.me"
         }
     ],
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.3",
         "oskarstark/trimmed-non-empty-string": "^1.0",
         "psr/log": "^1.1 || ^2.0 || ^3.0",
         "symfony/http-client": "^5.1 || ^6.0",
         "symfony/http-foundation": "^5.4 || ^6.0",
         "symfony/mime": "^5.4 || ^6.0",
         "thecodingmachine/safe": "^1.0 || ^2.0",
-        "webmozart/assert": "^1.7"
+        "webmozart/assert": "^1.7",
+        "zendesk/zendesk_api_client_php": "^3.0"
     },
     "require-dev": {
         "ergebnis/composer-normalize": "^2.2",
         "ergebnis/test-util": "^1.5",
-        "friendsofphp/php-cs-fixer": "^2.19",
+        "friendsofphp/php-cs-fixer": "^v3.46.0",
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "^0.12.14",
         "phpstan/phpstan-webmozart-assert": "^0.12.2",
@@ -30,16 +31,20 @@
         "thecodingmachine/phpstan-safe-rule": "^1.0 || ^2.0"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true,
+            "phpstan/extension-installer": true
+        }
     },
     "autoload": {
         "psr-4": {
-            "Datana\\Zammad\\Api\\": "src/"
+            "Datana\\Zendesk\\Api\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Datana\\Zammad\\Api\\Tests\\": "tests/"
+            "Datana\\Zendesk\\Api\\Tests\\": "tests/"
         }
     },
     "minimum-stability": "stable",

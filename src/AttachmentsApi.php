@@ -13,11 +13,13 @@ declare(strict_types=1);
 
 namespace Datana\Zendesk\Api;
 
-use Datana\Zendesk\Api\Domain\Value\Ticket;
+use Datana\Zendesk\Api\Domain\Value\Attachment;
+use Datana\Zendesk\Api\Domain\Value\Upload;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Zendesk\API\HttpClient;
 
-final class TicketsApi implements TicketsApiInterface
+final class AttachmentsApi implements AttachmentsApiInterface
 {
     public function __construct(
         private HttpClient $client,
@@ -25,12 +27,16 @@ final class TicketsApi implements TicketsApiInterface
     ) {
     }
 
-    public function create(Ticket $ticket): bool
+    public function create(Attachment $attachment): Upload
     {
         try {
-            $this->client->tickets()->create($ticket->toArray());
+            $response = $this->client->attachments()->upload($attachment->toArray());
 
-            return true;
+            if (null === $response) {
+                throw new UploadException(sprintf('Upload of "%s" failed.', $attachment->filePath));
+            }
+
+            return new Upload($response->upload->token);
         } catch (\Throwable $e) {
             $this->logger->error($e->getMessage());
 
