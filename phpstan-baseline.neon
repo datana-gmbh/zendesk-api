@@ -1,32 +1,12 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Method Datana\\\\Zammad\\\\Api\\\\NullTicketsApi\\:\\:search\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: "#^Method Datana\\\\Zendesk\\\\Api\\\\Domain\\\\Value\\\\Ticket\\:\\:__construct\\(\\) has parameter \\$customFields with no value type specified in iterable type array\\.$#"
 			count: 1
-			path: src/NullTicketsApi.php
+			path: src/Domain/Value/Ticket.php
 
 		-
-			message: "#^Method Datana\\\\Zammad\\\\Api\\\\NullTicketsApi\\:\\:update\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			message: "#^Method Datana\\\\Zendesk\\\\Api\\\\Domain\\\\Value\\\\Ticket\\:\\:__construct\\(\\) has parameter \\$uploads with no value type specified in iterable type array\\.$#"
 			count: 1
-			path: src/NullTicketsApi.php
-
-		-
-			message: "#^Method Datana\\\\Zammad\\\\Api\\\\TicketsApi\\:\\:search\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/TicketsApi.php
-
-		-
-			message: "#^Method Datana\\\\Zammad\\\\Api\\\\TicketsApi\\:\\:update\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/TicketsApi.php
-
-		-
-			message: "#^Method Datana\\\\Zammad\\\\Api\\\\TicketsApiInterface\\:\\:search\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/TicketsApiInterface.php
-
-		-
-			message: "#^Method Datana\\\\Zammad\\\\Api\\\\TicketsApiInterface\\:\\:update\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/TicketsApiInterface.php
+			path: src/Domain/Value/Ticket.php
 
