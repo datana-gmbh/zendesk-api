@@ -14,21 +14,26 @@ composer require datana-gmbh/zendesk-api
 
 ### Setup
 
+        arguments:
+            - '%env(ZENDESK_API_SUBDOMAIN)%'
+        calls:
+            - ['setAuth', ['basic', { token: '%env(ZENDESK_API_TOKEN)%', username: '%env(ZENDESK_API_USERNAME)%' }]]
+
 ```php
-use Datana\Zammad\Api\ZammadClient;
+use Zendesk\API\HttpClient;
 
-$baseUri = 'https://...';
-$token = '...';
+$subdomain = 'company'
+$username  = 'username'
+$token  = '...'
 
-$client = new ZammadClient($baseUri, $token);
+$client = new HttpClient($subdomain);
+$client->setAuth('basic', [ 'token' => $token, 'username' => $username ]);
 
-// you can now request any endpoint which needs authentication
-$client->request('GET', '/api/something', $options);
 ```
 
 ## Tickets
 
-In your code you should type-hint to `Datana\Zammad\Api\TicketsApiInterface`
+In your code you should type-hint to `Datana\Zendesk\Api\TicketsApiInterface`
 
 ### Create a ticket
 
