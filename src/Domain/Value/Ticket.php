@@ -22,11 +22,10 @@ final readonly class Ticket
 
     /**
      * @param CustomFieldInterface[] $customFields
-     * @param Upload[] $uploads
+     * @param Upload[]               $uploads
      */
     public function __construct(
-        public string $requesterName,
-        public string $requesterEmail,
+        public Requester $requester,
         public string $subject,
         public string $description,
         public array $customFields = [],
@@ -34,10 +33,7 @@ final readonly class Ticket
     ) {
         $values = [
             'subject' => $subject,
-            'requester' => [
-                'name' => $requesterName,
-                'email' => $requesterEmail,
-            ],
+            'requester' => $requester->toArray(),
             'comment' => [
                 'body' => $description,
             ],

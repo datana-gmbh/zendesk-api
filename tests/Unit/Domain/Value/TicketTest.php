@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Datana\Zendesk\Api\Tests\Unit\Domain\Value;
 
+use Datana\Zendesk\Api\Domain\Value\Requester;
 use Datana\Zendesk\Api\Domain\Value\Ticket;
 use Datana\Zendesk\Api\Domain\Value\Upload;
 use Datana\Zendesk\Api\Tests\Fixture\CustomFields\SampleCustomField;
@@ -31,8 +32,10 @@ final class TicketTest extends TestCase
         $faker = self::faker();
 
         $ticket = new Ticket(
-            $name = $faker->name(),
-            $email = $faker->email(),
+            new Requester(
+                $name = $faker->name(),
+                $email = $faker->email(),
+            ),
             $subject = $faker->sentence(),
             $description = $faker->text(),
         );
@@ -57,8 +60,10 @@ final class TicketTest extends TestCase
         $faker = self::faker();
 
         $ticket = new Ticket(
-            $name = $faker->name(),
-            $email = $faker->email(),
+            new Requester(
+                $name = $faker->name(),
+                $email = $faker->email(),
+            ),
             $subject = $faker->sentence(),
             $description = $faker->text(),
             [$customField = new SampleCustomField()]
@@ -90,8 +95,10 @@ final class TicketTest extends TestCase
         $faker = self::faker();
 
         $ticket = new Ticket(
-            $name = $faker->name(),
-            $email = $faker->email(),
+            new Requester(
+                $name = $faker->name(),
+                $email = $faker->email(),
+            ),
             $subject = $faker->sentence(),
             $description = $faker->text(),
             [],
