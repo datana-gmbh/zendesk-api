@@ -13,12 +13,17 @@ declare(strict_types=1);
 
 namespace Datana\Zendesk\Api;
 
+use Datana\Zendesk\Api\Domain\Value\Response\TicketResponse;
 use Datana\Zendesk\Api\Domain\Value\Ticket;
 
 final class NullTicketsApi implements TicketsApiInterface
 {
-    public function create(Ticket $ticket): bool
+    public function create(Ticket $ticket): TicketResponse
     {
-        return true;
+        $response = new \stdClass();
+        $response->tickets = new \stdClass();
+        $response->tickets->id = 1234;
+
+        return new TicketResponse($response);
     }
 }

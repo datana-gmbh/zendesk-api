@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace Datana\Zendesk\Api;
 
+use Datana\Zendesk\Api\Domain\Value\Response\TicketResponse;
 use Datana\Zendesk\Api\Domain\Value\Ticket;
+use Datana\Zendesk\Api\Exception\CannotCreateTicketException;
 use Psr\Log\LoggerInterface;
 use Zendesk\API\HttpClient;
 
@@ -25,12 +27,16 @@ final class TicketsApi implements TicketsApiInterface
     ) {
     }
 
-    public function create(Ticket $ticket): bool
+    public function create(Ticket $ticket): TicketResponse
     {
         try {
-            $this->client->tickets()->create($ticket->toArray());
+            $response = $this->client->tickets()->create($ticket->toArray());
 
-            return true;
+            if (null === $response) {
+                throw new CannotCreateTicketException('Failed to create Ticket via Zendesk API');
+            }
+
+            return new TicketResponse($response);
         } catch (\Throwable $e) {
             $this->logger->error($e->getMessage());
 

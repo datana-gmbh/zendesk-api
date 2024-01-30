@@ -11,12 +11,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Datana\Zendesk\Api;
+namespace Datana\Zendesk\Api\Exception;
 
-use Datana\Zendesk\Api\Domain\Value\Response\TicketResponse;
-use Datana\Zendesk\Api\Domain\Value\Ticket;
-
-interface TicketsApiInterface
+final class CannotCreateTicketException extends \RuntimeException
 {
-    public function create(Ticket $ticket): TicketResponse;
 }
