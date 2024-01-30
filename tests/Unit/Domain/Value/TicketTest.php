@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-/*
+/**
  * This file is part of Zendesk-Api.
  *
  * (c) Datana GmbH <info@datana.rocks>
@@ -66,7 +66,7 @@ final class TicketTest extends TestCase
             ),
             $subject = $faker->sentence(),
             $description = $faker->text(),
-            [$customField = new SampleCustomField()]
+            [$customField = new SampleCustomField()],
         );
 
         self::assertSame([
@@ -102,7 +102,7 @@ final class TicketTest extends TestCase
             $subject = $faker->sentence(),
             $description = $faker->text(),
             [],
-            [$upload = new Upload($faker->md5())]
+            [$upload = new Upload($faker->md5())],
         );
 
         self::assertSame([

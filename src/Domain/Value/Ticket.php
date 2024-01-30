@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-/*
+/**
  * This file is part of Zendesk-Api.
  *
  * (c) Datana GmbH <info@datana.rocks>
@@ -13,10 +13,26 @@ declare(strict_types=1);
 
 namespace Datana\Zendesk\Api\Domain\Value;
 
+/**
+ * @phpstan-import-type RequesterValues from Requester
+ *
+ * @phpstan-type TicketValues array{
+ *      subject: string,
+ *      requester: RequesterValues,
+ *      comment: array{
+ *          body: string,
+ *          uploads?: list<string>,
+ *      },
+ *      custom_fields?: non-empty-array<int, array{
+ *          id: int,
+ *          value: mixed,
+ *      }>,
+ * }
+ */
 final readonly class Ticket
 {
     /**
-     * @var array<mixed>
+     * @var TicketValues
      */
     private array $values;
 
@@ -54,7 +70,7 @@ final readonly class Ticket
     }
 
     /**
-     * @return array<mixed>
+     * @return TicketValues
      */
     public function toArray(): array
     {

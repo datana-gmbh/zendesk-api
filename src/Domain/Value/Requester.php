@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-/*
+/**
  * This file is part of Zendesk-Api.
  *
  * (c) Datana GmbH <info@datana.rocks>
@@ -13,10 +13,17 @@ declare(strict_types=1);
 
 namespace Datana\Zendesk\Api\Domain\Value;
 
+/**
+ * @phpstan-type RequesterValues array{
+ *       name: string,
+ *       email: string,
+ *       phone?: string
+ *  }
+ */
 final readonly class Requester
 {
     /**
-     * @var string[]
+     * @var RequesterValues
      */
     private array $values;
 
@@ -38,7 +45,7 @@ final readonly class Requester
     }
 
     /**
-     * @return array<mixed>
+     * @return RequesterValues
      */
     public function toArray(): array
     {
