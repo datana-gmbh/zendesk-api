@@ -13,10 +13,17 @@ declare(strict_types=1);
 
 namespace Datana\Zendesk\Api\Domain\Value;
 
+/**
+ * @phpstan-type AttachmentValues array{
+ *      file: string,
+ *      type: string,
+ *      name: string,
+ * }
+ */
 final readonly class Attachment
 {
     /**
-     * @var array<mixed>
+     * @var AttachmentValues
      */
     private array $values;
 
@@ -25,17 +32,15 @@ final readonly class Attachment
         public string $mimeType,
         public string $fileName,
     ) {
-        $values = [
+        $this->values = [
             'file' => $filePath,
             'type' => $mimeType,
             'name' => $fileName,
         ];
-
-        $this->values = $values;
     }
 
     /**
-     * @return array<mixed>
+     * @return AttachmentValues
      */
     public function toArray(): array
     {

@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Datana\Zendesk\Api\Domain\Value;
 
 /**
- * @phpstan-type Values array{
+ * @phpstan-type RequesterValues array{
  *       name: string,
  *       email: string,
  *       phone?: string
@@ -23,7 +23,7 @@ namespace Datana\Zendesk\Api\Domain\Value;
 final readonly class Requester
 {
     /**
-     * @var Values
+     * @var RequesterValues
      */
     private array $values;
 
@@ -45,7 +45,7 @@ final readonly class Requester
     }
 
     /**
-     * @return Values
+     * @return RequesterValues
      */
     public function toArray(): array
     {
