@@ -21,8 +21,8 @@ final class NullTicketsApi implements TicketsApiInterface
     public function create(Ticket $ticket): TicketResponse
     {
         $response = new \stdClass();
-        $response->tickets = new \stdClass();
-        $response->tickets->id = 1234;
+        $response->ticket = new \stdClass();
+        $response->ticket->id = 1234;
 
         return new TicketResponse($response);
     }
